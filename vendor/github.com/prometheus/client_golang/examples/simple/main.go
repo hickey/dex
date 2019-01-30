@@ -1,4 +1,4 @@
-// Copyright 2017 The Prometheus Authors
+// Copyright 2015 The Prometheus Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -11,34 +11,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// +build !go1.8
-
-package promhttp
+// A minimal example of how to include Prometheus instrumentation.
+package main
 
 import (
-	"io"
+	"flag"
 	"net/http"
+
+	"github.com/prometheus/client_golang/prometheus"
 )
 
-func newDelegator(w http.ResponseWriter, observeWriteHeaderFunc func(int)) delegator {
-	d := &responseWriterDelegator{
-		ResponseWriter:     w,
-		observeWriteHeader: observeWriteHeaderFunc,
-	}
+var addr = flag.String("listen-address", ":8080", "The address to listen on for HTTP requests.")
 
-	id := 0
-	if _, ok := w.(http.CloseNotifier); ok {
-		id += closeNotifier
-	}
-	if _, ok := w.(http.Flusher); ok {
-		id += flusher
-	}
-	if _, ok := w.(http.Hijacker); ok {
-		id += hijacker
-	}
-	if _, ok := w.(io.ReaderFrom); ok {
-		id += readerFrom
-	}
-
-	return pickDelegator[id](d)
+func main() {
+	flag.Parse()
+	http.Handle("/metrics", prometheus.Handler())
+	http.ListenAndServe(*addr, nil)
 }
