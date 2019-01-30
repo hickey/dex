@@ -33,7 +33,7 @@ require (
 	github.com/matttproud/golang_protobuf_extensions v0.0.0-20150406173934-fc2b8d3a73c4 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/pquerna/cachecontrol v0.0.0-20160421231612-c97913dcbd76 // indirect
-	github.com/prometheus/client_golang v0.9.0-pre1
+	github.com/prometheus/client_golang v0.8.0
 	github.com/prometheus/client_model v0.0.0-20150212101744-fa8ad6fec335 // indirect
 	github.com/prometheus/common v0.0.0-20170220103846-49fee292b27b // indirect
 	github.com/prometheus/procfs v0.0.0-20170216223256-a1dba9ce8bae // indirect
